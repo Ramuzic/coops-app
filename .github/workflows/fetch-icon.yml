@@ -1,0 +1,43 @@
+# Makes the app icon and splash from the real logo, then commits them.
+# Run it from the Actions tab (Fetch icon > Run workflow). The default address is the
+# ChickenCoops.ai app logo. It writes resources/ plus every iPhone and Android icon and
+# splash file (scripts/make-art.py), so nothing else has to run afterwards.
+name: Fetch icon
+
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: Logo address (a square PNG, 1024 x 1024 or bigger)
+        required: true
+        default: https://coopsai.s3.us-east-1.amazonaws.com/coop-ai-app-logo.png
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Download the logo
+        env:
+          SRC: ${{ inputs.url }}
+        run: |
+          mkdir -p /tmp/logo
+          curl -fsSL "$SRC" -o /tmp/logo/logo.png
+          file /tmp/logo/logo.png
+      - name: Make the icons and splash screens
+        run: |
+          pip install pillow
+          python scripts/make-art.py --logo /tmp/logo/logo.png
+      - name: Save
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add resources ios/App/App/Assets.xcassets android/app/src/main/res
+          git commit -m "App icon and splash from the logo" || echo "No changes"
+          git push

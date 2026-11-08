@@ -1,0 +1,108 @@
+# App Store screenshots from the iPhone simulator (6.9 inch, 1320 x 2868).
+# Run it from the Actions tab (Screenshots > Run workflow). The pictures are saved
+# into the repository under screenshots/ios-6.9/.
+name: Screenshots
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  ios:
+    runs-on: macos-26
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install packages and copy the web settings
+        run: |
+          npm ci
+          npx cap sync ios
+
+      - name: Pick the largest iPhone simulator
+        run: |
+          xcrun simctl list devices available
+          UDID=$(xcrun simctl list devices available | grep -E "iPhone 1[6-9] Pro Max" | tail -1 | sed -E 's/.*\(([0-9A-F-]{36})\).*/\1/')
+          if [ -z "$UDID" ]; then UDID=$(xcrun simctl list devices available | grep -E "iPhone.*Pro Max" | tail -1 | sed -E 's/.*\(([0-9A-F-]{36})\).*/\1/'); fi
+          echo "Using simulator $UDID"
+          echo "UDID=$UDID" >> "$GITHUB_ENV"
+
+      - name: Build the app for the simulator
+        run: |
+          xcodebuild -project ios/App/App.xcodeproj -scheme App -configuration Debug \
+            -sdk iphonesimulator -destination "id=$UDID" -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO build | tail -20
+
+      - name: Take the screenshots
+        env:
+          COOP_SHOT_USER: ${{ secrets.COOP_SHOT_USER }}
+          COOP_SHOT_PASS: ${{ secrets.COOP_SHOT_PASS }}
+        run: |
+          APP=build/Build/Products/Debug-iphonesimulator/App.app
+          OUT=screenshots/ios-6.9
+          mkdir -p "$OUT"
+          xcrun simctl boot "$UDID" || true
+          xcrun simctl bootstatus "$UDID" -b
+          xcrun simctl status_bar "$UDID" override --time "9:41" --dataNetwork wifi --wifiMode active --wifiBars 3 --cellularMode active --cellularBars 4 --batteryState charged --batteryLevel 100
+
+          BUNDLE=$(/usr/libexec/PlistBuddy -c "Print CFBundleIdentifier" "$APP/Info.plist")
+          fresh() { xcrun simctl uninstall "$UDID" "$BUNDLE" || true; xcrun simctl install "$UDID" "$APP"; }
+          shot() {
+            name="$1"; wait="$2"; shift 2
+            xcrun simctl terminate "$UDID" "$BUNDLE" || true
+            xcrun simctl launch "$UDID" "$BUNDLE" -CoopShot "$@"
+            sleep "$wait"
+            xcrun simctl io "$UDID" screenshot "$OUT/$name.png"
+            echo "::notice::Saved $name"
+          }
+
+          # First launch: onboarding.
+          fresh
+          shot 01-onboarding 8 -CoopShowOnboarding
+          # Everything else without onboarding.
+          shot 02-home 16
+          shot 03-plan 20 -CoopURL "https://chickencoops.ai/planner"
+          shot 04-reels 20 -CoopURL "https://chickencoops.ai/reels/"
+          shot 05-community 16 -CoopURL "https://chickencoops.ai/?qcf_feed=1"
+
+          # Signed in as a free member, when the repository has the secrets
+          # COOP_SHOT_USER and COOP_SHOT_PASS (a dummy member, never an admin).
+          if [ -n "$COOP_SHOT_USER" ] && [ -n "$COOP_SHOT_PASS" ]; then
+            JAR=$(mktemp)
+            curl -s -o /dev/null -c "$JAR" -b "wordpress_test_cookie=WP%20Cookie%20check" \
+              -A "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 ChickenCoopsApp/1.0" \
+              --data-urlencode "log=$COOP_SHOT_USER" --data-urlencode "pwd=$COOP_SHOT_PASS" \
+              --data "rememberme=forever&testcookie=1&redirect_to=https%3A%2F%2Fchickencoops.ai%2F" \
+              https://chickencoops.ai/wp-login.php
+            CK=$(awk -F'\t' 'NF>=7 && $6 != "" {printf "%s=%s; ", $6, $7}' "$JAR")
+            rm -f "$JAR"
+            if echo "$CK" | grep -q "wordpress_logged_in_"; then
+              echo "::notice::Signed in for the member screenshots"
+              shot 06-home-in 18 -CoopCookies "$CK" -CoopURL "https://chickencoops.ai/app-home/"
+              shot 07-community-in 22 -CoopCookies "$CK" -CoopURL "https://chickencoops.ai/?qcf_feed=1"
+              shot 08-plan-in 22 -CoopCookies "$CK" -CoopURL "https://chickencoops.ai/planner"
+            else
+              echo "::warning::Sign-in did not work, so the member screenshots were skipped"
+            fi
+          else
+            echo "::notice::No COOP_SHOT_USER / COOP_SHOT_PASS secrets, member screenshots skipped"
+          fi
+
+          # Copies for the 6.3 inch slot (1206 x 2622).
+          mkdir -p screenshots/ios-6.3
+          for f in "$OUT"/*.png; do sips -z 2622 1206 "$f" --out "screenshots/ios-6.3/$(basename "$f")" >/dev/null; done
+          ls -la "$OUT" screenshots/ios-6.3
+
+      - name: Save the screenshots to the repository
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add screenshots
+          git commit -m "App Store screenshots (iPhone 6.9 inch)" || echo "No changes"
+          git push

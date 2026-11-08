@@ -1,0 +1,146 @@
+package ai.chickencoops.app;
+
+import android.content.Context;
+import android.graphics.Color;
+import android.net.Uri;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+/**
+ * Everything the native shell needs, read from www/app.json (copied into the
+ * app as assets/public/app.json by "npx cap copy"). Edit app.json to change
+ * tabs, colors or onboarding text without touching code.
+ */
+public final class AppConfig {
+
+    public static final class Tab {
+        public final String label, url, icon, action;
+        /** Extra page paths that also light this tab (Home lights on the site root too). */
+        public final List<String> match;
+        Tab(String label, String url, String icon, String action, List<String> match) {
+            this.label = label; this.url = url; this.icon = icon; this.action = action; this.match = match;
+        }
+    }
+
+    public static final class Page {
+        public final String icon, title, text;
+        public final boolean push;
+        Page(String icon, String title, String text, boolean push) {
+            this.icon = icon; this.title = title; this.text = text; this.push = push;
+        }
+    }
+
+    private static AppConfig instance;
+
+    public String start = "https://chickencoops.ai/app-home/";
+    public String host = "chickencoops.ai";
+    public String oneSignalAppId = "";
+    public int top = Color.parseColor("#fef6e7");
+    public int bar = Color.parseColor("#321b13");
+    public int active = Color.parseColor("#f9d544");
+    /** Highlights drawn on the light paper (onboarding dots, offline icon). */
+    public int accent = Color.parseColor("#cf4238");
+    public int inactive = Color.parseColor("#c9b8a6");
+    public int paper = Color.parseColor("#fef6e7");
+    public int ink = Color.parseColor("#321b13");
+    public int muted = Color.parseColor("#6b5a4d");
+    public String offlineTitle = "You are offline";
+    public String offlineText = "Your flock is safe, we will reconnect soon.";
+    public String offlineButton = "Try again";
+    public final List<Tab> tabs = new ArrayList<>();
+    public final List<Page> onboarding = new ArrayList<>();
+
+    public static synchronized AppConfig get(Context c) {
+        if (instance == null) instance = new AppConfig(c.getApplicationContext());
+        return instance;
+    }
+
+    private AppConfig(Context c) {
+        try (InputStream in = c.getAssets().open("public/app.json")) {
+            java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();
+            byte[] buf = new byte[4096];
+            int n;
+            while ((n = in.read(buf)) != -1) out.write(buf, 0, n);
+            JSONObject j = new JSONObject(new String(out.toByteArray(), StandardCharsets.UTF_8));
+            start = j.optString("start", start);
+            host = j.optString("host", host);
+            oneSignalAppId = j.optString("onesignal_app_id", "");
+            JSONObject col = j.optJSONObject("colors");
+            if (col != null) {
+                top = color(col, "top", top);
+                bar = color(col, "bar", bar);
+                active = color(col, "active", active);
+                accent = color(col, "accent", col.has("accent") ? accent : active);
+                inactive = color(col, "inactive", inactive);
+                paper = color(col, "paper", paper);
+                ink = color(col, "ink", ink);
+                muted = color(col, "muted", muted);
+            }
+            JSONArray t = j.optJSONArray("tabs");
+            if (t != null) {
+                for (int i = 0; i < t.length(); i++) {
+                    JSONObject o = t.getJSONObject(i);
+                    List<String> m = new ArrayList<>();
+                    JSONArray ma = o.optJSONArray("match");
+                    if (ma != null) for (int k = 0; k < ma.length(); k++) m.add(ma.optString(k));
+                    tabs.add(new Tab(o.optString("label"), o.optString("url", start), o.optString("icon", "home"), o.optString("action", "navigate"), m));
+                }
+            }
+            JSONArray ob = j.optJSONArray("onboarding");
+            if (ob != null) {
+                for (int i = 0; i < ob.length(); i++) {
+                    JSONObject o = ob.getJSONObject(i);
+                    onboarding.add(new Page(o.optString("icon", "home"), o.optString("title"), o.optString("text"), o.optBoolean("push", false)));
+                }
+            }
+            JSONObject off = j.optJSONObject("offline");
+            if (off != null) {
+                offlineTitle = off.optString("title", offlineTitle);
+                offlineText = off.optString("text", offlineText);
+                offlineButton = off.optString("button", offlineButton);
+            }
+        } catch (Exception ignored) {
+            // Fall back to the defaults above.
+        }
+        if (tabs.isEmpty()) {
+            List<String> m = new ArrayList<>();
+            m.add("/");
+            tabs.add(new Tab("Home", start, "home", "navigate", m));
+        }
+    }
+
+    private static int color(JSONObject o, String key, int def) {
+        try { return Color.parseColor(o.optString(key)); } catch (Exception e) { return def; }
+    }
+
+    /** Vector icon for each icon name used in app.json. */
+    public static int icon(String name) {
+        switch (name) {
+            case "home": return R.drawable.ic_tab_home;
+            case "plan": return R.drawable.ic_tab_plan;
+            case "breeds": return R.drawable.ic_tab_breeds;
+            case "reels": return R.drawable.ic_tab_reels;
+            case "community": return R.drawable.ic_tab_community;
+            case "chat": return R.drawable.ic_tab_chat;
+            case "share": return R.drawable.ic_tab_share;
+            case "bell": return R.drawable.ic_tab_bell;
+            default: return R.drawable.ic_tab_home;
+        }
+    }
+
+    /** True when a link belongs to the site and should stay inside the app. */
+    public boolean isOwn(String url) {
+        try {
+            String h = Uri.parse(url).getHost();
+            if (h == null) return false;
+            h = h.toLowerCase();
+            return h.equals(host) || h.endsWith("." + host);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+}

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- targetPackage must match applicationId in android/app/build.gradle. -->
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="plan"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_plan"
+        android:shortcutShortLabel="@string/sc_plan"
+        android:shortcutLongLabel="@string/sc_plan">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="ai.chickencoops.app"
+            android:targetClass="ai.chickencoops.app.MainActivity"
+            android:data="https://chickencoops.ai/planner" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="community"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_community"
+        android:shortcutShortLabel="@string/sc_community"
+        android:shortcutLongLabel="@string/sc_community">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="ai.chickencoops.app"
+            android:targetClass="ai.chickencoops.app.MainActivity"
+            android:data="https://chickencoops.ai/?qcf_feed=1" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="reels"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_reels"
+        android:shortcutShortLabel="@string/sc_reels"
+        android:shortcutLongLabel="@string/sc_reels">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="ai.chickencoops.app"
+            android:targetClass="ai.chickencoops.app.MainActivity"
+            android:data="https://chickencoops.ai/reels/" />
+    </shortcut>
+</shortcuts>

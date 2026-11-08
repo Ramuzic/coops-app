@@ -1,0 +1,75 @@
+{
+  "version": "2.0.0",
+  "start": "https://chickencoops.ai/app-home/",
+  "host": "chickencoops.ai",
+  "onesignal_app_id": "",
+  "colors": {
+    "top": "#fef6e7",
+    "bar": "#321b13",
+    "active": "#f9d544",
+    "inactive": "#c9b8a6",
+    "accent": "#cf4238",
+    "paper": "#fef6e7",
+    "ink": "#321b13",
+    "muted": "#6b5a4d"
+  },
+  "tabs": [
+    {
+      "label": "Home",
+      "url": "https://chickencoops.ai/app-home/",
+      "icon": "home",
+      "match": [
+        "/",
+        "/app-home/"
+      ]
+    },
+    {
+      "label": "Plan",
+      "url": "https://chickencoops.ai/planner",
+      "icon": "plan"
+    },
+    {
+      "label": "Reels",
+      "url": "https://chickencoops.ai/reels/",
+      "icon": "reels"
+    },
+    {
+      "label": "Community",
+      "url": "https://chickencoops.ai/?qcf_feed=1",
+      "icon": "community"
+    },
+    {
+      "label": "Chat",
+      "url": "https://chickencoops.ai/app-home/",
+      "icon": "chat",
+      "action": "chat"
+    }
+  ],
+  "onboarding": [
+    {
+      "icon": "plan",
+      "title": "Plan the perfect coop",
+      "text": "Tell us how many hens you keep and how much room you have. We will help you build a coop they will love to roost in."
+    },
+    {
+      "icon": "breeds",
+      "title": "Know every breed",
+      "text": "Find out who is who in your flock, from fluffy Silkies to busy Leghorns, and what each one needs to stay happy."
+    },
+    {
+      "icon": "community",
+      "title": "Share your flock",
+      "text": "Post photos, swap tips and cheer on other keepers. Every hen deserves a little fame."
+    },
+    {
+      "icon": "chat",
+      "title": "Ask the coop helper",
+      "text": "Feed, eggs, a hen acting funny? Ask any time of day and get a friendly answer fast."
+    }
+  ],
+  "offline": {
+    "title": "You are offline",
+    "text": "Your flock is safe, we will reconnect soon.",
+    "button": "Try again"
+  }
+}

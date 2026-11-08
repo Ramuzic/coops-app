@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ChickenCoops.ai</title>
+<style>
+  :root { --paper: #fef6e7; --card: #fffbf4; --ink: #321b13; --muted: #6b5a4d; --barn: #cf4238; --sun: #f9d544; --sage: #8ab181; }
+  html, body { margin: 0; height: 100%; background: var(--paper); color: var(--ink); font: 16px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-user-select: none; user-select: none; }
+  main { min-height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 32px; box-sizing: border-box; }
+  .card { background: var(--card); border: 2px solid rgba(50, 27, 19, .08); border-radius: 24px; padding: 32px 26px; max-width: 340px; box-shadow: 0 8px 24px rgba(50, 27, 19, .08); }
+  .mark { font-weight: 800; font-size: 22px; letter-spacing: -0.01em; margin-bottom: 22px; }
+  .mark span { color: var(--barn); }
+  svg { width: 56px; height: 56px; color: var(--barn); margin-bottom: 14px; }
+  h1 { font-size: 22px; margin: 0 0 8px; }
+  p { color: var(--muted); margin: 0 0 24px; }
+  button { appearance: none; border: 0; background: var(--sun); color: var(--ink); font-weight: 700; font-size: 17px; padding: 14px 34px; border-radius: 999px; -webkit-tap-highlight-color: transparent; transition: transform .12s ease; }
+  button:active { transform: scale(.95); }
+  .grass { margin-top: 26px; height: 6px; width: 120px; border-radius: 6px; background: var(--sage); opacity: .6; }
+</style>
+</head>
+<body>
+<main>
+  <div class="card">
+    <div class="mark">ChickenCoops<span>.ai</span></div>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8.8a15 15 0 0 1 20 0"/><path d="M5 12.3a10 10 0 0 1 14 0"/><path d="M8.5 15.8a5 5 0 0 1 7 0"/><circle cx="12" cy="19.5" r="1"/><path d="M3 3l18 18"/></svg>
+    <h1>You are offline</h1>
+    <p>You are offline. Your flock is safe, we will reconnect soon.</p>
+    <button type="button" id="again">Try again</button>
+  </div>
+  <div class="grass"></div>
+</main>
+<script>
+  document.getElementById('again').addEventListener('click', function () {
+    try { if (window.Capacitor && Capacitor.nativePromise) Capacitor.nativePromise('CoopApp', 'haptic', { style: 'light' }).catch(function () {}); } catch (e) {}
+    location.href = 'https://chickencoops.ai/app-home/';
+  });
+</script>
+</body>
+</html>

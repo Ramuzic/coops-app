@@ -1,0 +1,38 @@
+{
+  "appId": "ai.chickencoops.app",
+  "appName": "ChickenCoops.ai",
+  "webDir": "www",
+  "server": {
+    "url": "https://chickencoops.ai/app-home/",
+    "cleartext": false,
+    "allowNavigation": [
+      "chickencoops.ai",
+      "*.chickencoops.ai",
+      "id-preview--6b90222b-3890-48d1-8670-80802a41899f.lovable.app",
+      "*.lovable.app"
+    ],
+    "errorPath": "offline.html"
+  },
+  "appendUserAgent": "ChickenCoopsApp/1.0",
+  "backgroundColor": "#fef6e7",
+  "ios": {
+    "contentInset": "never",
+    "scrollEnabled": true
+  },
+  "android": {
+    "allowMixedContent": false
+  },
+  "plugins": {
+    "SystemBars": {
+      "insetsHandling": "disable",
+      "style": "LIGHT"
+    },
+    "SplashScreen": {
+      "launchShowDuration": 1200,
+      "launchAutoHide": true,
+      "backgroundColor": "#fef6e7",
+      "showSpinner": false,
+      "androidScaleType": "CENTER_CROP"
+    }
+  }
+}

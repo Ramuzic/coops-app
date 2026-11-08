@@ -1,0 +1,98 @@
+# Codemagic: builds the signed iPhone app for the EXISTING ChickenCoops.ai App Store app.
+# Start it by hand from the Codemagic dashboard (Start new build) and pick a workflow:
+#   ios-testflight  builds and uploads to TestFlight (test it on your phone first)
+#   ios-app-store   builds, uploads and submits the update for App Review (you press
+#                   Release in App Store Connect after Apple approves it)
+#
+# One-time setup (all in dashboards, nothing secret goes in this file):
+#  1. App Store Connect > Users and Access > Integrations > App Store Connect API:
+#     create a key with the App Manager role and download the .p8 file
+#     (you also need its Key ID and the Issuer ID shown on that page).
+#  2. Codemagic > Settings > Integrations > Developer Portal: add that key
+#     and name it exactly: chickencoops_asc
+#  3. Bundle id: must be the live app's bundle id. ai.chickencoops.app is a placeholder,
+#     see README.md "Bundle id" for every file that holds it.
+#  4. Apple Developer > Identifiers > (the live app's id): tick Push Notifications,
+#     Associated Domains (chickencoops.ai links open the app) and Sign in with Apple, save.
+#  5. Apple Developer > Identifiers: register <bundle id>.CoopWidget (the home screen
+#     widget, no capabilities needed). ios_signing below fetches App Store profiles for
+#     the app and the widget on its own.
+#  6. Codemagic > this app > Environment variables (optional, group "chickencoops"):
+#     APP_STORE_APPLE_ID = the app's numeric Apple ID (App Store Connect > App Information).
+#     With it the build number is set to one above the latest build Apple has.
+
+definitions:
+  ios_build: &ios_build
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    integrations:
+      app_store_connect: chickencoops_asc
+    environment:
+      node: 22
+      xcode: latest
+      vars:
+        # The real logo. Turned into the app icon and splash during the build.
+        LOGO_URL: https://coopsai.s3.us-east-1.amazonaws.com/coop-ai-app-logo.png
+        # Lowest build number to use. Must be higher than any build already uploaded.
+        BUILD_FLOOR: 200
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: ai.chickencoops.app
+    scripts:
+      - name: Install packages
+        script: npm ci
+      - name: App icon and splash from the logo
+        script: |
+          # If the logo cannot be downloaded the placeholder art in the project is used.
+          mkdir -p /tmp/logo
+          if curl -fsSL "$LOGO_URL" -o /tmp/logo/logo.png; then
+            python3 -m pip install --quiet pillow 2>/dev/null || python3 -m pip install --quiet --break-system-packages pillow
+            python3 scripts/make-art.py --logo /tmp/logo/logo.png || echo "Logo step failed, placeholder art used"
+          else
+            echo "Logo not downloaded, placeholder art used"
+          fi
+      - name: Copy the web settings into the iPhone project
+        script: npx cap sync ios
+      - name: Use the signing profiles
+        script: xcode-project use-profiles
+      - name: Set the build number
+        script: |
+          N=$BUILD_FLOOR
+          if [ -n "$APP_STORE_APPLE_ID" ]; then
+            A=$(app-store-connect get-latest-app-store-build-number "$APP_STORE_APPLE_ID" 2>/dev/null || echo 0)
+            T=$(app-store-connect get-latest-testflight-build-number "$APP_STORE_APPLE_ID" 2>/dev/null || echo 0)
+            for x in "$A" "$T"; do
+              case "$x" in ''|*[!0-9]*) ;; *) [ "$((x + 1))" -gt "$N" ] && N=$((x + 1)) ;; esac
+            done
+          fi
+          [ "$((BUILD_FLOOR + PROJECT_BUILD_NUMBER))" -gt "$N" ] && N=$((BUILD_FLOOR + PROJECT_BUILD_NUMBER))
+          echo "Build number $N"
+          cd ios/App
+          agvtool new-version -all "$N"
+      - name: Build the app file
+        script: |
+          xcode-project build-ipa \
+            --project "ios/App/App.xcodeproj" \
+            --scheme "App"
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+
+workflows:
+  ios-testflight:
+    name: iPhone to TestFlight
+    <<: *ios_build
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
+
+  ios-app-store:
+    name: iPhone update to App Review
+    <<: *ios_build
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: false
+        submit_to_app_store: true
+        release_type: MANUAL
