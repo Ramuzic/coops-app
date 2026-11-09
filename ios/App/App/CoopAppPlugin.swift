@@ -185,10 +185,23 @@ public class CoopAppPlugin: CAPPlugin, CAPBridgedPlugin {
                 return
             }
             if !ext.isEmpty { OneSignal.login(ext) }
-            call.resolve([
-                "id": OneSignal.User.pushSubscription.id ?? "",
-                "optedIn": OneSignal.User.pushSubscription.optedIn
-            ])
+            let done = {
+                call.resolve([
+                    "id": OneSignal.User.pushSubscription.id ?? "",
+                    "optedIn": OneSignal.User.pushSubscription.optedIn
+                ])
+            }
+            // Members who finished onboarding before it had a notifications step are asked once here.
+            let askedKey = "coop.pushAsked"
+            if !OneSignal.Notifications.permission && OneSignal.Notifications.canRequestPermission
+                && !UserDefaults.standard.bool(forKey: askedKey) {
+                UserDefaults.standard.set(true, forKey: askedKey)
+                OneSignal.Notifications.requestPermission({ _ in
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { done() }
+                }, fallbackToSettings: false)
+                return
+            }
+            done()
             #else
             call.resolve(["id": "", "optedIn": false])
             #endif

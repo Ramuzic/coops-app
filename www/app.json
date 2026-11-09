@@ -65,6 +65,12 @@
       "icon": "chat",
       "title": "Ask the coop helper",
       "text": "Feed, eggs, a hen acting funny? Ask any time of day and get a friendly answer fast."
+    },
+    {
+      "icon": "bell",
+      "title": "Never miss a cluck",
+      "text": "Turn on notifications for replies, messages and new tips from the flock.",
+      "push": true
     }
   ],
   "offline": {
