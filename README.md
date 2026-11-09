@@ -28,26 +28,20 @@ Version 2.0.0, build 200. Building on a Mac: see `BUILD-GUIDE.md`.
 
 After changing `www/app.json` or `capacitor.config.json`, run `npx cap sync` and build again.
 
-## Bundle id (change this first)
+## Bundle id
 
-`ai.chickencoops.app` is a placeholder. Find the live app's real bundle id in App Store
-Connect > the app > App Information > Bundle ID, and put it in every one of these:
+The iPhone app uses the live App Store app's bundle id `coop.chickencoops.ai` (App Store name "Coopai", Apple ID 6797082651). The widget is `coop.chickencoops.ai.CoopWidget`. It is set in:
 
-- `ios/App/App.xcodeproj/project.pbxproj` (4 lines: `PRODUCT_BUNDLE_IDENTIFIER`, app Debug and Release, widget Debug and Release as `<id>.CoopWidget`)
-- `codemagic.yaml` (`bundle_identifier`)
+- `ios/App/App.xcodeproj/project.pbxproj` (app and widget, Debug and Release)
+- `codemagic.yaml` (`bundle_identifier`, plus `APP_STORE_APPLE_ID: "6797082651"`)
 - `capacitor.config.json` (`appId`)
-- `scripts/add-widget-target.rb` (only used if the widget target is ever added again)
-- Android, only if the Play Store app id should match: `android/app/build.gradle` (`applicationId`), `android/app/src/main/res/xml/shortcuts.xml` (3 x `targetPackage`), `android/app/src/main/res/values/strings.xml` (`package_name`, `custom_url_scheme`). Leave `namespace` and the Java folder `ai/chickencoops/app` alone.
+- `scripts/add-widget-target.rb`
 
-One command does all of it (run it in this folder, swap in the real id):
+Android still uses `ai.chickencoops.app` (there is no Play Store app yet). Change `applicationId` in `android/app/build.gradle`, `res/xml/shortcuts.xml` and `res/values/strings.xml` if a Play Store app is made with a different id.
 
-```
-grep -rlI "ai\.chickencoops\.app" --exclude-dir=node_modules --exclude-dir=java --exclude=README.md . | xargs sed -E -i '' 's/ai\.chickencoops\.app\.CoopWidget/REAL.BUNDLE.ID.CoopWidget/g; /namespace/!s/ai\.chickencoops\.app([^.a-zA-Z]|$)/REAL.BUNDLE.ID\1/g'
-```
+## Purchases in the app
 
-That is the Mac version (`sed -i ''`). On Linux use `sed -E -i`. It leaves the Android `namespace` and `targetClass` alone, as it should.
-
-Quick action types (`coop.plan` and so on) and the Java package are not bundle ids and do not need changing.
+The site hides upgrades, plan pages and checkout inside the app (chickencoops-tools 1.6.4 checks the `ChickenCoopsApp` user agent), so the app sells nothing and needs no Apple purchases for now.
 
 ## What you need to supply
 

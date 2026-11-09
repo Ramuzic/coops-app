@@ -10,16 +10,14 @@
 #     (you also need its Key ID and the Issuer ID shown on that page).
 #  2. Codemagic > Settings > Integrations > Developer Portal: add that key
 #     and name it exactly: chickencoops_asc
-#  3. Bundle id: must be the live app's bundle id. ai.chickencoops.app is a placeholder,
-#     see README.md "Bundle id" for every file that holds it.
+#  3. Bundle id: coop.chickencoops.ai (the live App Store app "Coopai", Apple ID 6797082651).
 #  4. Apple Developer > Identifiers > (the live app's id): tick Push Notifications,
 #     Associated Domains (chickencoops.ai links open the app) and Sign in with Apple, save.
 #  5. Apple Developer > Identifiers: register <bundle id>.CoopWidget (the home screen
 #     widget, no capabilities needed). ios_signing below fetches App Store profiles for
 #     the app and the widget on its own.
-#  6. Codemagic > this app > Environment variables (optional, group "chickencoops"):
-#     APP_STORE_APPLE_ID = the app's numeric Apple ID (App Store Connect > App Information).
-#     With it the build number is set to one above the latest build Apple has.
+#  6. APP_STORE_APPLE_ID is set below (6797082651), so the build number is set to one
+#     above the latest build Apple has.
 
 definitions:
   ios_build: &ios_build
@@ -35,9 +33,11 @@ definitions:
         LOGO_URL: https://coopsai.s3.us-east-1.amazonaws.com/coop-ai-app-logo.png
         # Lowest build number to use. Must be higher than any build already uploaded.
         BUILD_FLOOR: 200
+        # The live app's numeric Apple ID, used to pick a build number above Apple's latest.
+        APP_STORE_APPLE_ID: "6797082651"
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: ai.chickencoops.app
+        bundle_identifier: coop.chickencoops.ai
     scripts:
       - name: Install packages
         script: npm ci

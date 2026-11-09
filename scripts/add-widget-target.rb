@@ -23,7 +23,7 @@ widget.add_system_framework(%w[WidgetKit SwiftUI])
 app_release = app.build_configurations.find { |c| c.name == 'Release' }.build_settings
 widget.build_configurations.each do |c|
   s = c.build_settings
-  s['PRODUCT_BUNDLE_IDENTIFIER'] = 'ai.chickencoops.app.CoopWidget'
+  s['PRODUCT_BUNDLE_IDENTIFIER'] = 'coop.chickencoops.ai.CoopWidget'
   s['PRODUCT_NAME'] = '$(TARGET_NAME)'
   s['INFOPLIST_FILE'] = 'CoopWidget/Info.plist'
   s['GENERATE_INFOPLIST_FILE'] = 'NO'
