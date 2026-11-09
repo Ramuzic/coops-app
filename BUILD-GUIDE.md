@@ -37,7 +37,7 @@ npx cap open ios
 In Xcode:
 
 1. Click **App** at the top of the left sidebar, then the **App** target, then **Signing & Capabilities**.
-2. **Team:** pick your Apple Developer account. Check the Bundle Identifier is the live app's id (see README.md). Do the same for the **CoopWidget** target (`<bundle id>.CoopWidget`).
+2. **Team:** pick **Qubi Labs LLC (J2SMUGDULG)** with Automatically manage signing on. The Bundle Identifier should read `coop.chickencoops.ai`. Do the same for the **CoopWidget** target, which should read `coop.chickencoops.ai.CoopWidget` (already registered in Apple Developer).
 3. Pick an iPhone simulator (or your plugged-in iPhone) at the top and press the Play button.
 
 OneSignal is already in the project as a package. Push stays off while `onesignal_app_id`
