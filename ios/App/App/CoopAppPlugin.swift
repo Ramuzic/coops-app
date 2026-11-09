@@ -20,6 +20,7 @@ public class CoopAppPlugin: CAPPlugin, CAPBridgedPlugin {
         CAPPluginMethod(name: "haptic", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "info", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "tabBar", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "theme", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "iapProducts", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "iapBuy", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "iapPending", returnType: CAPPluginReturnPromise),
@@ -233,6 +234,15 @@ public class CoopAppPlugin: CAPPlugin, CAPBridgedPlugin {
         let hidden = call.getBool("hidden") ?? false
         DispatchQueue.main.async {
             (self.bridge?.viewController?.parent as? RootViewController)?.setTabBarHidden(hidden)
+            call.resolve()
+        }
+    }
+
+    /// The site's light or dark mode: { dark: true }. The top bar and tabs follow it.
+    @objc public func theme(_ call: CAPPluginCall) {
+        let dark = call.getBool("dark") ?? false
+        DispatchQueue.main.async {
+            (self.bridge?.viewController?.parent as? RootViewController)?.setTheme(dark: dark)
             call.resolve()
         }
     }

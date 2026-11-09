@@ -43,7 +43,21 @@ class RootViewController: UIViewController, UITabBarDelegate {
 
     private let chatJS = "(function(){try{if(window.MobileApp&&typeof MobileApp.open==='function'){MobileApp.open();return 'ok';}if(window.Widget&&typeof Widget.open==='function'){Widget.open();return 'ok';}var b=document.getElementById('bmc-mobile-btn')||document.getElementById('bmc-pill');if(b){b.click();return 'ok';}}catch(e){}return 'no';})()"
 
-    override var preferredStatusBarStyle: UIStatusBarStyle { .darkContent }
+    /// Follows the site's light or dark mode (the page reports it through CoopApp.theme).
+    private var isDark = false
+    override var preferredStatusBarStyle: UIStatusBarStyle { isDark ? .lightContent : .darkContent }
+
+    func setTheme(dark: Bool) {
+        isDark = dark
+        UIView.animate(withDuration: 0.2) {
+            self.view.backgroundColor = dark ? UIColor(hex: "#121212") : self.config.topColor
+        }
+        if floating {
+            tabBar.overrideUserInterfaceStyle = dark ? .dark : .light
+            tabBar.tintColor = dark ? UIColor(hex: "#f6c945") : UIColor(hex: "#d23f31")
+        }
+        setNeedsStatusBarAppearanceUpdate()
+    }
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask { .portrait }
 
     override func viewDidLoad() {
@@ -226,7 +240,8 @@ class RootViewController: UIViewController, UITabBarDelegate {
 
     private func buildTabBar() {
         tabBar.delegate = self
-        tabBar.tintColor = config.activeColor
+        tabBar.tintColor = floating ? UIColor(hex: "#d23f31") : config.activeColor
+        if floating { tabBar.overrideUserInterfaceStyle = .light }
         if !floating {
             // Before iOS 26: a solid bar in the site's dark colour.
             classicAppearance()

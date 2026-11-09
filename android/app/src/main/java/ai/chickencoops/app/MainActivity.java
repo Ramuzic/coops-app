@@ -54,6 +54,8 @@ public class MainActivity extends BridgeActivity {
     private boolean pendingChat = false;
     private boolean tabHidden = false;
     private boolean typing = false;
+    private boolean dark = false;
+    private LinearLayout shellRoot;
     private ConnectivityManager.NetworkCallback netCallback;
 
     @Override
@@ -150,6 +152,7 @@ public class MainActivity extends BridgeActivity {
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
         root.setBackgroundColor(cfg.top);
+        shellRoot = root;
 
         FrameLayout webArea = new FrameLayout(this);
         webArea.setBackgroundColor(cfg.paper);
@@ -189,9 +192,16 @@ public class MainActivity extends BridgeActivity {
     }
 
     /** Dark icons on the light top bar; light gesture bar over the dark tab bar. */
+    /** Follows the site's light or dark mode (the page reports it through CoopApp.theme). */
+    void setTheme(boolean d) {
+        dark = d;
+        if (shellRoot != null) shellRoot.setBackgroundColor(d ? 0xFF121212 : cfg.top);
+        applyBarColors();
+    }
+
     private void applyBarColors() {
         WindowInsetsControllerCompat c = WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
-        c.setAppearanceLightStatusBars(true);
+        c.setAppearanceLightStatusBars(!dark);
         c.setAppearanceLightNavigationBars(false);
     }
 

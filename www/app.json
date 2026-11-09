@@ -1,11 +1,11 @@
 {
-  "version": "2.0.0",
+  "version": "2.0.1",
   "start": "https://chickencoops.ai/app-home/",
   "host": "chickencoops.ai",
   "onesignal_app_id": "4e56d1f5-243e-4473-9ea1-701e20eb4b7e",
   "colors": {
     "top": "#fef6e7",
-    "bar": "#321b13",
+    "bar": "#1b1b1b",
     "active": "#f9d544",
     "inactive": "#c9b8a6",
     "accent": "#cf4238",

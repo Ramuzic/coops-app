@@ -96,6 +96,16 @@ public class CoopAppPlugin extends Plugin {
         });
     }
 
+    /** The site's light or dark mode: { dark: true }. The top bar follows it. */
+    @PluginMethod
+    public void theme(PluginCall call) {
+        boolean dark = Boolean.TRUE.equals(call.getBoolean("dark", false));
+        getActivity().runOnUiThread(() -> {
+            if (getActivity() instanceof MainActivity) ((MainActivity) getActivity()).setTheme(dark);
+            call.resolve();
+        });
+    }
+
     /** Android launchers show their own notification dots, so the count is not set by hand. */
     @PluginMethod
     public void setBadge(PluginCall call) { call.resolve(); }
