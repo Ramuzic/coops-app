@@ -130,9 +130,8 @@ def icon_tile(icon, side):
 def splash(logo, w, h):
     im = Image.new("RGBA", (w, h), CREAM + (255,))
     if SPLASH_ICON is not None:
-        side = int(min(w, h) * (0.18 if w == h else 0.30))
-        t = icon_tile(SPLASH_ICON, side)
-        im.alpha_composite(t, ((w - t.width) // 2, (h - t.height) // 2))
+        # Like the NexURLs app: the native splash is plain cream, and the branded
+        # boot splash (logo, name, progress bar) is drawn by the site's PWA plugin.
         return im.convert("RGB")
     side = int(min(w, h) * (0.18 if w == h else 0.26))
     m = mark(logo, side).convert("RGBA")
