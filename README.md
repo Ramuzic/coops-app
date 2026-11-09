@@ -46,7 +46,7 @@ The site hides upgrades, plan pages and checkout inside the app (chickencoops-to
 ## What you need to supply
 
 - **Apple Team ID**: Apple Developer > Membership. For a Mac build pick the team in Xcode (Signing & Capabilities). Codemagic finds it from the API key.
-- **App Store Connect API key**: App Store Connect > Users and Access > Integrations > App Store Connect API. Role App Manager. You need the .p8 file, the Key ID and the Issuer ID. Add it in Codemagic > Settings > Integrations > Developer Portal and name it `chickencoops_asc`.
+- **App Store Connect API key**: App Store Connect > Users and Access > Integrations > App Store Connect API. Role App Manager. You need the .p8 file, the Key ID and the Issuer ID. Add it in Codemagic > Settings > Integrations > Developer Portal and name it `nexurls_asc`.
 - **App ID capabilities** (Apple Developer > Identifiers > the live app's id): Push Notifications, Associated Domains, Sign in with Apple. If you do not want one of them, remove its key from `ios/App/App/App.entitlements`, or signing fails.
 - **Widget App ID**: register `<bundle id>.CoopWidget` (no capabilities). Codemagic makes its profile.
 - **APP_STORE_APPLE_ID** (optional): the app's numeric Apple ID, as a Codemagic environment variable. With it the build number becomes one above the latest build Apple has.
