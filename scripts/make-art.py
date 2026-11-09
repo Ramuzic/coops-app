@@ -103,8 +103,37 @@ def round_icon(logo, size):
     return base.resize((size, size), Image.LANCZOS)
 
 
+SPLASH_ICON = None  # set to the app icon so the splash shows the same picture
+
+
+def icon_tile(icon, side):
+    """The app icon as a rounded tile (like on the home screen) with a soft shadow."""
+    s4 = side * 4
+    base = icon.convert("RGBA").resize((s4, s4), Image.LANCZOS)
+    m = Image.new("L", (s4, s4), 0)
+    ImageDraw.Draw(m).rounded_rectangle([0, 0, s4 - 1, s4 - 1], radius=int(s4 * 0.225), fill=255)
+    base.putalpha(m)
+    tile_ = base.resize((side, side), Image.LANCZOS)
+    pad = int(side * 0.12)
+    out = Image.new("RGBA", (side + pad * 2, side + pad * 2), (0, 0, 0, 0))
+    sh = Image.new("L", out.size, 0)
+    ImageDraw.Draw(sh).rounded_rectangle([pad, pad + int(side * 0.04), pad + side, pad + side + int(side * 0.04)], radius=int(side * 0.225), fill=70)
+    from PIL import ImageFilter
+    sh = sh.filter(ImageFilter.GaussianBlur(side * 0.05))
+    shadow = Image.new("RGBA", out.size, (50, 27, 19, 255))
+    shadow.putalpha(sh)
+    out.alpha_composite(shadow)
+    out.alpha_composite(tile_, (pad, pad))
+    return out
+
+
 def splash(logo, w, h):
     im = Image.new("RGBA", (w, h), CREAM + (255,))
+    if SPLASH_ICON is not None:
+        side = int(min(w, h) * (0.18 if w == h else 0.30))
+        t = icon_tile(SPLASH_ICON, side)
+        im.alpha_composite(t, ((w - t.width) // 2, (h - t.height) // 2))
+        return im.convert("RGB")
     side = int(min(w, h) * (0.18 if w == h else 0.26))
     m = mark(logo, side).convert("RGBA")
     im.alpha_composite(m, ((w - side) // 2, (h - side) // 2))
@@ -203,6 +232,10 @@ def main():
         ImageDraw.Draw(m).ellipse([0, 0, s4 - 1, s4 - 1], fill=255)
         base.putalpha(m)
         return base.resize((size, size), Image.LANCZOS)
+
+    global SPLASH_ICON
+    if mascot is not None:
+        SPLASH_ICON = icon  # splash shows the same mascot picture as the app icon
 
     # resources/ (the source files @capacitor/assets would use)
     save(ic_full(1024), r("resources", "icon.png"))
