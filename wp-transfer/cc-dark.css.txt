@@ -437,3 +437,9 @@ html.cc-dark .mkmm-item:hover{background:#33241c !important}
 html.cc-dark #bmc-panel,html.cc-dark #bmc-panel-foot{background:#271b15 !important;color:#f6ead6}
 html.cc-dark #bmc-panel-new,html.cc-dark #bmc-panel-settings,html.cc-dark #bmc-panel-close,html.cc-dark #bmc-new-btn{background:#33241c !important;color:#f6ead6 !important}
 html.cc-dark #bmc-pill,html.cc-dark #bmc-mobile-btn{border-color:rgba(246,234,214,.15) !important;box-shadow:0 6px 18px rgba(0,0,0,.45) !important}
+
+/* The header picture: a soft ring in dark mode, so the photo fills the circle. */
+html.cc-dark .cc-site .ast-header-account-type-avatar img.avatar, html.cc-dark .ast-header-account img.avatar { border-color: rgba(246, 234, 214, .22) !important; background: #271b15; }
+
+/* Profiles: the community already has its own Block button, so the extra one stays hidden (both modes). */
+.qpr-header-actions:has(#qpr-bk) .ccsf-block-btn { display: none !important; }
