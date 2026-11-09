@@ -167,3 +167,273 @@ html.cc-dark .cc-site [class*="mkmm"] :is(h1, h2, h3, h4, strong, b, .mkmm-t, .m
 html.cc-dark .cc-site [class*="mkmm"] :is(p, span, small, .mkmm-d, .mkmm-desc) { color: #c4b3a0; }
 html.cc-dark .cc-site [class*="mkmm"] a:hover, html.cc-dark .cc-site [class*="mkmm"] li:hover { background: rgba(246, 234, 214, .06) !important; }
 html.cc-dark .cc-site .mkmm-ic, html.cc-dark .cc-site .mkmm-fi, html.cc-dark .cc-site .mkmm-fk { border-color: rgba(246, 234, 214, .12) !important; }
+
+/* Mega menu, chat (desktop popup and phone) and community colours in dark mode, from the NexURLs dark theme in Coops colours. */
+/* mega.css */
+html.cc-dark .mkmm-inner{background:#271b15;border:1px solid rgba(255,255,255,0.12)}
+html.cc-dark .mkmm-item{color:#f6ead6 !important}
+html.cc-dark .mkmm-item:hover,html.cc-dark .mkmm-item:focus-visible{background:#33241c}
+html.cc-dark .mkmm-item.is-here{background:#33241c}
+html.cc-dark .mkmm-ic{background:color-mix(in srgb,var(--mkmm-accent) 10%,#271b15)}
+html.cc-dark .mkmm-d{color:#c4b3a0}
+html.cc-dark .mkmm-b{background:#33241c;color:#857edd}
+html.cc-dark .mkmm-b-free{background:#33241c}
+html.cc-dark .mkmm-b-new{background:#33241c;color:#ed6ea3}
+html.cc-dark .mkmm-glow{background:radial-gradient(circle,color-mix(in srgb,var(--mkmm-accent) 70%,#271b15) 0%,transparent 70%)}
+html.cc-dark .mkmm-fb{background:#271b15;color:#f6ead6 !important}
+html.cc-dark .mkmm-b-price{background:#33241c;color:#c4b3a0}
+html.cc-dark .mkmm-skel{background:linear-gradient(90deg,#33241c 0%,#33241c 50%,#33241c 100%)}
+html.cc-dark .mkmm-gate{background:rgba(28,27,25,0.94)}
+html.cc-dark .mkmm-gate strong{color:#f6ead6}
+html.cc-dark .mkmm-gate span{color:#c4b3a0}
+html.cc-dark .mkmm-gate a.mkmm-gate-in{color:#c4b3a0 !important}
+html.cc-dark .mkmm-post{color:#f6ead6 !important}
+html.cc-dark .mkmm-post:hover{background:#33241c}
+html.cc-dark .mkmm-av{background:#33241c}
+html.cc-dark .mkmm-pm strong{color:#f6ead6}
+html.cc-dark .mkmm-px{color:#c4b3a0}
+html.cc-dark .mkmm-upd{color:#f6ead6 !important}
+html.cc-dark .mkmm-upd:hover{background:#33241c}
+html.cc-dark .mkmm-ut{background:color-mix(in srgb,var(--c) 12%,#271b15)}
+html.cc-dark .mkmm-thought{background:#271b15;color:#c4b3a0}
+html.cc-dark .mkmm-faces img{border:2px solid rgba(255,255,255,0.07)}
+html.cc-dark .mkmm-form input:focus{border-color:rgba(255,255,255,0.12)}
+html.cc-dark .mkmm-form button{background:#271b15;color:#f6ead6}
+html.cc-dark .mkmm-me-head{color:#f6ead6 !important}
+html.cc-dark .mkmm-me-head img{background:#33241c}
+html.cc-dark .mkmm-me-stats span{background:#33241c;color:#c4b3a0}
+html.cc-dark .mkmm-me-stats strong{color:#f6ead6}
+html.cc-dark .mkmm-bp{color:#f6ead6 !important}
+html.cc-dark .mkmm-bp:hover{background:#33241c}
+html.cc-dark .mkmm-bi{background:#33241c}
+html.cc-dark .mkmm-bi-none{background:linear-gradient(135deg,color-mix(in srgb,var(--mkmm-accent) 18%,#271b15),#33241c)}
+html.cc-dark .mkmm-item.is-tease .mkmm-t{color:#c4b3a0}
+html.cc-dark .mkmm-drawer{background:#271b15}
+html.cc-dark .mkmm-dr-head{border-bottom:1px solid rgba(255,255,255,0.12)}
+html.cc-dark .mkmm-dr-title{color:#f6ead6}
+html.cc-dark .mkmm-dr-x{background:#33241c;color:#f6ead6}
+html.cc-dark .mkmm-dr-me{background:#33241c;color:#f6ead6 !important}
+html.cc-dark .mkmm-dr-me em{color:#c4b3a0}
+html.cc-dark .mkmm-dr-in{border:1px solid rgba(255,255,255,0.12);color:#f6ead6 !important}
+html.cc-dark .mkmm-ml,html.cc-dark .mkmm-ms-h{border-bottom:1px solid rgba(255,255,255,0.12);color:#f6ead6 !important}
+html.cc-dark .mkmm-ms-b{border-bottom:1px solid rgba(255,255,255,0.12)}
+html.cc-dark .mkmm-drawer{color:#f6ead6}
+html.cc-dark .mkmm-drawer .mkmm-dr-x,html.cc-dark .mkmm-drawer .mkmm-dr-x:hover,html.cc-dark .mkmm-drawer .mkmm-dr-x:focus,html.cc-dark .mkmm-drawer .mkmm-dr-x:active{background:#33241c !important;color:#f6ead6 !important}
+html.cc-dark .mkmm-drawer .mkmm-ms-h,html.cc-dark .mkmm-drawer .mkmm-ms-h:hover,html.cc-dark .mkmm-drawer .mkmm-ms-h:focus,html.cc-dark .mkmm-drawer .mkmm-ms-h:active{border-bottom:1px solid rgba(255,255,255,0.12) !important;color:#f6ead6 !important}
+html.cc-dark .mkmm-drawer .mkmm-ml{color:#f6ead6 !important}
+html.cc-dark .mkmm-drawer .mkmm-t{color:#f6ead6 !important}
+html.cc-dark .mkmm-drawer .mkmm-d{color:#c4b3a0 !important}
+html.cc-dark .mkmm-dot.is-on{background:#271b15}
+html.cc-dark .mkmm-deck:not(:has(.is-on)) .mkmm-dot:first-child{background:#271b15}
+html.cc-dark .mkmm-feature{color:#f6ead6;border:1px solid rgba(255,255,255,0.12);background:radial-gradient(circle at 92% 6%,rgba(8,145,178,.16),transparent 42%),radial-gradient(circle at 4% 100%,rgba(37,99,235,.12),transparent 46%),linear-gradient(150deg,#33241c 0%,#33241c 100%)}
+html.cc-dark .mkmm-fk{background:#271b15;border:1px solid rgba(255,255,255,0.12)}
+html.cc-dark .mkmm-ft{color:#f6ead6}
+html.cc-dark .mkmm-fx{color:#c4b3a0}
+html.cc-dark .mkmm-fi{background:#271b15;border:1px solid rgba(255,255,255,0.12)}
+html.cc-dark .mkmm-fbd .mkmm-b-price{background:#271b15;color:#f6ead6;border:1px solid rgba(255,255,255,0.12)}
+html.cc-dark .mkmm-faces img{border-color:rgba(255,255,255,0.12);background:#33241c}
+html.cc-dark .mkmm-stats{color:#c4b3a0}
+html.cc-dark .mkmm-stats strong{color:#f6ead6}
+html.cc-dark .mkmm-form input[type=email],html.cc-dark .mkmm-form input[type=text]{border:1px solid rgba(255,255,255,0.12);background:#271b15;color:#f6ead6}
+html.cc-dark .mkmm-form input:focus{background:#271b15}
+html.cc-dark .mkmm-earn-main{background:#271b15;border:1px solid rgba(255,255,255,0.12)}
+html.cc-dark .mkmm-earn-main span,html.cc-dark .mkmm-earn-grid span,html.cc-dark .mkmm-earn-link{color:#c4b3a0}
+html.cc-dark .mkmm-earn-main strong,html.cc-dark .mkmm-earn-grid strong{color:#f6ead6}
+html.cc-dark .mkmm-earn-link code{background:#271b15;border:1px solid rgba(255,255,255,0.12);color:#f6ead6}
+html.cc-dark .mkmm-earn-none p{color:#c4b3a0}
+html.cc-dark .mkmm-top{color:#f6ead6 !important}
+html.cc-dark .mkmm-top img{background:#33241c}
+html.cc-dark .mkmm-top span{color:#c4b3a0}
+html.cc-dark .mkmm-top-more{border-top-color:rgba(255,255,255,0.12)}
+/* marketur-chat.css */
+html.cc-dark .mc-reply-quote{border-left:3px solid rgba(255,255,255,0.06)}
+html.cc-dark .mc-reaction-pill{color:var(--mc-muted, #c4b3a0)}
+html.cc-dark #mc-pill-badge{border:2px solid rgba(255,255,255,0.12)}
+html.cc-dark #mc-panel{background:#271b15}
+html.cc-dark #mc-panel-header{border-bottom:1px solid rgba(255,255,255,0.12)}
+html.cc-dark #mc-panel-title{color:#f6ead6}
+html.cc-dark #mc-panel-close{background:#33241c;color:#c4b3a0}
+html.cc-dark #mc-panel-close:hover{background:#33241c}
+html.cc-dark .mc-view-header{border-bottom:1px solid rgba(255,255,255,0.12);color:#f6ead6}
+html.cc-dark .mc-view-back{background:#33241c}
+html.cc-dark .mc-mini-thread-row{border-bottom:1px solid rgba(255,255,255,0.12)}
+html.cc-dark .mc-mini-thread-row:hover{background:#33241c}
+html.cc-dark .mc-thr-name{color:#f6ead6}
+html.cc-dark #mc-panel-footer{border-top:1px solid rgba(255,255,255,0.12);background:#271b15}
+html.cc-dark #mc-me-name{color:#f6ead6}
+html.cc-dark #mc-new-search-wrap{border-bottom:1px solid rgba(255,255,255,0.12)}
+html.cc-dark #mc-new-search{border:1px solid rgba(255,255,255,0.12);background:#271b15;color:#f6ead6}
+html.cc-dark #mc-new-search:focus{background:#271b15}
+html.cc-dark .mc-user-row{border-bottom:1px solid rgba(255,255,255,0.12)}
+html.cc-dark .mc-user-row:hover{background:#33241c}
+html.cc-dark .mc-user-row span{color:#f6ead6}
+html.cc-dark #mc-messages-list{background:#271b15}
+html.cc-dark .mc-bubble-other{background:#271b15;color:#f6ead6}
+html.cc-dark #mc-input-bar{border-top:1px solid rgba(255,255,255,0.12);background:#271b15}
+html.cc-dark #mc-msg-input{border:1.5px solid rgba(255,255,255,0.12);background:#271b15;color:#f6ead6}
+html.cc-dark #mc-msg-input:focus{background:#271b15}
+html.cc-dark #mc-pinned-bar{background:linear-gradient(135deg, #33241c, #3a2618);border-bottom:1px solid rgba(255,255,255,0.12)}
+html.cc-dark #mc-pinned-bar:hover{background:#3a2618}
+html.cc-dark .mc-app .mc-load-more{background:var(--mc-surface, #271b15) !important}
+/* mc-popup.css */
+html.cc-dark #bmc-pill-cnt{border:2px solid rgba(255,255,255,0.12)}
+html.cc-dark #bmc-panel-settings{background:#33241c}
+html.cc-dark #bmc-panel-close:hover{background:#33241c}
+html.cc-dark #bmc-panel-foot{background:#271b15}
+html.cc-dark #bmc-srch{border:1.5px solid rgba(255,255,255,0.12)}
+html.cc-dark #bmc-srch:focus{background:#271b15}
+html.cc-dark .bmc-reaction-pill{color:var(--bmc-muted, #c4b3a0)}
+html.cc-dark .bmc-act-btn{color:#c4b3a0}
+html.cc-dark .bmc-act-btn:hover{background:#33241c}
+html.cc-dark .bmc-act-btn.danger:hover{background:#33241c}
+html.cc-dark .bmc-emoji-picker button:hover{background:#33241c}
+html.cc-dark .bmc-edit-bar{background:#33241c}
+html.cc-dark .bmc-reply-bar{background:#33241c}
+html.cc-dark .bmc-att-fname{color:#c4b3a0}
+html.cc-dark .bmc-emoji-panel{background:#271b15 !important;border-top:1px solid rgba(255,255,255,0.12) !important}
+html.cc-dark #bmc-incoming-call{background:#271b15}
+html.cc-dark .bmc-incoming-pulse{background:#271b15}
+html.cc-dark #bmc-thread-ctx .bmc-ctx-action:hover{background:#271b15}
+html.cc-dark #bmc-online-toast{background:#271b15}
+html.cc-dark #bmc-online-toast-av{border:2px solid rgba(255,255,255,0.12)}
+html.cc-dark #bmc-online-toast-dot{border:2px solid rgba(255,255,255,0.12)}
+html.cc-dark #bmc-online-toast-name{color:#f6ead6}
+html.cc-dark #bmc-online-toast-bar{background:#33241c}
+html.cc-dark .bmc-rpill{background:#271b15;border:1.5px solid rgba(255,255,255,0.12);color:#f6ead6}
+html.cc-dark .bmc-rpill:hover{background:#33241c}
+html.cc-dark .bmc-ab{color:#c4b3a0}
+html.cc-dark .bmc-ab:hover{background:#33241c}
+html.cc-dark #bmc-emoji-popup{background:#271b15}
+html.cc-dark #bmc-emoji-popup button:hover{background:#33241c}
+html.cc-dark .bmc-ep{background:#271b15}
+html.cc-dark .bmc-ep button:hover{background:#33241c}
+html.cc-dark .bmc-reply-bar{background:#33241c}
+html.cc-dark .bmc-edit-bar{background:#33241c}
+html.cc-dark #bmc-online-toast{background:#271b15}
+html.cc-dark .bmc-tdm-item.danger:hover{background:#33241c}
+html.cc-dark #bmc-mobile-badge{border:2px solid rgba(255,255,255,0.12)}
+html.cc-dark #bmc-mobile-app{background:#271b15}
+html.cc-dark #bmc-mv-list{background:#271b15}
+html.cc-dark #bmc-mv-list-header{border-bottom:1px solid rgba(255,255,255,0.12) !important;background:#271b15 !important}
+html.cc-dark #bmc-mv-list-title{color:#f6ead6 !important}
+html.cc-dark .bmc-mv-hbtn{color:#f6ead6 !important}
+html.cc-dark .bmc-mv-online{border:2px solid rgba(255,255,255,0.12)}
+html.cc-dark .bmc-mv-name{color:#f6ead6}
+html.cc-dark #bmc-mv-conv{background:#271b15}
+html.cc-dark #bmc-mv-pinned{background:#271b15}
+html.cc-dark #bmc-mv-reply-bar,html.cc-dark #bmc-mv-edit-bar{background:#33241c}
+html.cc-dark #bmc-mv-footer{background:#271b15 !important;border-top:1px solid rgba(255,255,255,0.12)}
+html.cc-dark #bmc-mv-footer-input:focus{background:#271b15}
+html.cc-dark #bmc-panel-menu{background:#271b15}
+html.cc-dark .bmc-bbl-call{background:#33241c !important;border:1.5px solid rgba(255,255,255,0.12) !important}
+html.cc-dark .bmc-bbl-call.me,html.cc-dark .bmc-mr.me .bmc-bbl-call{background:#33241c !important}
+html.cc-dark .bmc-call-event-label{color:#f6ead6}
+html.cc-dark .bmc-og-preview{border:1px solid rgba(255,255,255,0.12);background:#271b15}
+html.cc-dark .bmc-og-title{color:#f6ead6}
+html.cc-dark .bmc-yt-preview{border:1px solid rgba(255,255,255,0.12)}
+html.cc-dark .bmc-yt-label{color:#ff5c5c;background:#271b15}
+html.cc-dark #bmc-mv-emoji-panel{background:#271b15 !important;border-top:1px solid rgba(255,255,255,0.12)}
+html.cc-dark .bmc-mv-epick:active{background:#33241c !important}
+html.cc-dark #bmc-settings-panel{background:#271b15}
+html.cc-dark .bmc-sp-section{border-bottom:1px solid rgba(255,255,255,0.12)}
+html.cc-dark .bmc-sp-row{color:#f6ead6}
+html.cc-dark .bmc-sp-row input[type=checkbox]{background:#33241c}
+html.cc-dark .bmc-sp-row input[type=checkbox]::after{background:#271b15}
+html.cc-dark .bmc-sp-btn.danger{background:#33241c}
+html.cc-dark .bmc-sp-btn.danger:hover{background:#3f1512}
+html.cc-dark .bmc-gcall-join{background:#271b15}
+html.cc-dark #bmc-mention-pop{background:#271b15;border:1px solid rgba(255,255,255,0.12)}
+html.cc-dark .bmc-mp-row img{background:#33241c}
+html.cc-dark .bmc-mp-name{color:#f6ead6}
+html.cc-dark .bmc-fwd-card{background:#271b15}
+html.cc-dark .bmc-fwd-preview{background:#271b15;border-bottom:1px solid rgba(255,255,255,0.12);color:#f6ead6}
+html.cc-dark .bmc-fwd-prev-body{color:#f6ead6}
+html.cc-dark .bmc-fwd-search{border:1px solid rgba(255,255,255,0.12)}
+html.cc-dark .bmc-fwd-row:hover{background:#271b15}
+html.cc-dark .bmc-fwd-row img{background:#33241c}
+html.cc-dark .bmc-fwd-row-name{color:#f6ead6}
+html.cc-dark .bmc-fwd-send:disabled{background:#33241c}
+html.cc-dark .bmc-fav-item{background:#271b15;border:1px solid rgba(255,255,255,0.12)}
+html.cc-dark .bmc-fav-item:hover{background:#33241c}
+html.cc-dark .bmc-fav-av{background:#33241c}
+html.cc-dark .bmc-fav-meta strong{color:#f6ead6}
+html.cc-dark .bmc-fav-content{color:#f6ead6}
+html.cc-dark .bmc-fav-unstar{background:#271b15;border:1px solid rgba(255,255,255,0.12)}
+html.cc-dark .bmc-fav-unstar:hover{background:#33241c}
+html.cc-dark .bmc-lc-join{background:#271b15 !important}
+html.cc-dark .bmc-lc-join:hover{background:#271b15 !important}
+html.cc-dark .bmc-cp-intro{color:#c4b3a0}
+html.cc-dark .bmc-cp-row{border:1px solid rgba(255,255,255,0.12)}
+html.cc-dark .bmc-cp-row:hover{border-color:rgba(255,255,255,0.12);background:#271b15}
+html.cc-dark .bmc-cp-row:has(input:checked){background:#33241c}
+html.cc-dark .bmc-cp-label{color:#f6ead6}
+html.cc-dark .bmc-cp-footer{border-top:1px solid rgba(255,255,255,0.12);background:#271b15}
+html.cc-dark .bmc-cp-cancel{background:#271b15 !important;color:#f6ead6 !important;border:1px solid rgba(255,255,255,0.12) !important}
+html.cc-dark .bmc-cp-cancel:hover{background:#271b15 !important}
+html.cc-dark .bmc-gif-picker{background:#271b15;border:1px solid rgba(255,255,255,0.12)}
+html.cc-dark .bmc-gif-picker-head{border-bottom:1px solid rgba(255,255,255,0.12)}
+html.cc-dark .bmc-gif-search{border:1.5px solid rgba(255,255,255,0.12) !important;background:#271b15 !important;color:#f6ead6 !important}
+html.cc-dark .bmc-gif-search:focus{background:#271b15 !important}
+html.cc-dark .bmc-gif-close{background:#271b15 !important;color:#f6ead6 !important}
+html.cc-dark .bmc-gif-close:hover{background:#33241c !important}
+html.cc-dark .bmc-gif-item{background:#271b15}
+html.cc-dark .bmc-gif-attribution{border-top:1px solid rgba(255,255,255,0.12);background:#271b15}
+
+
+html.cc-dark{--bmc-bg:#1d140f;--bmc-surface:#271b15;--bmc-bubble-them:#3b2a20;--bmc-bubble-them-text:#f6ead6;--bmc-border:rgba(255,255,255,.1);--bmc-text:#f6ead6;--bmc-muted:#c4b3a0;--bmc-purple-l:#3d2219;
+  --mc-bg:#1d140f;--mc-surface:#271b15;--mc-border:rgba(255,255,255,.1);--mc-text:#f6ead6;--mc-muted:#c4b3a0;--mc-primary-light:#3d2219}
+
+/* The community's own dark colors use the same warm charcoal (1.2.0). */
+html.cc-dark,html.cc-dark.qcf-dark,html.cc-dark body.qcf-dark,html.cc-dark .qcf-dark{--bg:#1d140f !important;--surface:#271b15 !important;--surface2:#33241c !important;--surface3:#3b2a20 !important;--text:#f6ead6 !important;--muted:#9a8774 !important;--muted2:#c4b3a0 !important;--border:rgba(255,255,255,.07) !important;--border2:rgba(255,255,255,.13) !important}
+
+/* Phone chat (1.2.2). The chat paints its own light colors with !important in its template, so dark mode has to answer the same way. Matches the site: page #1d140f, bars #271b15, orange accent. */
+html.cc-dark #bmc-mobile-app{--bmc-bg:#1d140f;--bmc-surface:#271b15;--bmc-border:rgba(255,255,255,.08);--bmc-text:#f6ead6;--bmc-muted:#c4b3a0;--bmc-purple-l:#2a1b13;--bmc-bubble-them:#33241c;--bmc-bubble-them-text:#f6ead6;background:#1d140f !important;color:#f6ead6}
+html.cc-dark #bmc-mv-list,html.cc-dark #bmc-mv-thread-list{background:#1d140f !important}
+html.cc-dark #bmc-mv-list-header{background:#271b15 !important;border-bottom:1px solid rgba(255,255,255,.08) !important}
+html.cc-dark #bmc-mv-list-title{color:#fdf3e3 !important}
+html.cc-dark .bmc-mv-hbtn{background:rgba(255,255,255,.08) !important;color:#f6ead6 !important}
+html.cc-dark .bmc-mv-hbtn:active{background:rgba(255,255,255,.16) !important}
+html.cc-dark .bmc-mv-thread{background:transparent;border-bottom:1px solid rgba(255,255,255,.07) !important}
+html.cc-dark .bmc-mv-thread:active{background:#271b15 !important}
+html.cc-dark .bmc-mv-name{color:#f6ead6 !important}
+html.cc-dark .bmc-mv-prev,html.cc-dark .bmc-mv-time{color:#c4b3a0 !important}
+html.cc-dark .bmc-mv-prev.bmc-mv-draft{color:#d9c9b3 !important}
+html.cc-dark .bmc-mv-online{border-color:#1d140f !important}
+html.cc-dark .bmc-mv-th-dots{color:#c4b3a0 !important}
+html.cc-dark .bmc-mv-thread.mc-ai-thread-row{background:linear-gradient(90deg,rgba(207,66,56,.12),transparent 65%) !important;border-left-color:#cf4238 !important}
+html.cc-dark #bmc-mv-list>div:last-child{background:#271b15 !important;border-top:1px solid rgba(255,255,255,.08) !important}
+html.cc-dark #bmc-mv-list>div:last-child div{color:#f6ead6}
+html.cc-dark #bmc-mv-list>div:last-child div+div{color:#34c759}
+html.cc-dark #bmc-mv-compose{background:#cf4238 !important;color:#1d140f !important}
+/* The conversation. */
+html.cc-dark #bmc-mv-conv,html.cc-dark #bmc-mv-msgs{background:#1d140f !important}
+html.cc-dark #bmc-mv-conv-header{background:#271b15 !important;border-bottom:1px solid rgba(255,255,255,.08)}
+html.cc-dark #bmc-mv-back,html.cc-dark #bmc-mv-conv-name{color:#fdf3e3 !important}
+html.cc-dark #bmc-mv-conv-status,html.cc-dark #bmc-mv-conv-typing{color:#c4b3a0 !important}
+html.cc-dark .bmc-mv-conv-btn{color:#f6ead6 !important}
+html.cc-dark .bmc-mv-conv-btn svg{fill:#f6ead6 !important}
+html.cc-dark .bmc-mv-conv-btn:active{background:rgba(255,255,255,.1) !important}
+html.cc-dark #bmc-mv-pinned{background:#271b15 !important;border-bottom-color:rgba(255,255,255,.08) !important}
+html.cc-dark #bmc-mv-reply-bar,html.cc-dark #bmc-mv-edit-bar{background:#33241c !important;border-top-color:#cf4238 !important}
+html.cc-dark .bmc-mv-bar-text{color:#ef7a6f !important}
+html.cc-dark #bmc-mobile-app .bmc-mr:not(.me) .bmc-bbl{background:#33241c !important;color:#f6ead6 !important;box-shadow:none !important}
+html.cc-dark #bmc-mobile-app .bmc-mr.me .bmc-bbl{background:#cf4238 !important;color:#1d140f !important}
+html.cc-dark #bmc-mobile-app .bmc-mr.me .bmc-msg-link{color:#1d140f !important}
+html.cc-dark #bmc-mobile-app .bmc-msg-time{color:#9a8774 !important}
+/* The typing bar: the words you type are light now. */
+html.cc-dark #bmc-mv-footer{background:#271b15 !important;border-top:1px solid rgba(255,255,255,.08) !important}
+html.cc-dark #bmc-mv-footer-input{background:#33241c !important;color:#f6ead6 !important;-webkit-text-fill-color:#f6ead6 !important;caret-color:#ef7a6f !important;border-radius:20px !important;padding:10px 14px !important;color-scheme:dark}
+html.cc-dark #bmc-mv-footer-input::placeholder{color:#9a8774 !important;-webkit-text-fill-color:#9a8774 !important}
+html.cc-dark #bmc-mv-footer-attach{color:#c4b3a0 !important}
+html.cc-dark #bmc-mv-emoji-panel,html.cc-dark #bmc-mobile-app .bmc-emoji-panel{background:#271b15 !important;border-top:1px solid rgba(255,255,255,.08) !important}
+html.cc-dark #bmc-mv-att-prev{background:#271b15 !important}
+html.cc-dark #bmc-mv-search-overlay{background:#1d140f !important}
+html.cc-dark #bmc-mv-search-inp{background:#33241c !important;color:#f6ead6 !important;-webkit-text-fill-color:#f6ead6 !important;border-color:rgba(255,255,255,.12) !important}
+html.cc-dark #bmc-mv-search-back{color:#ef7a6f !important}
+html.cc-dark #bmc-mv-ctx,html.cc-dark #bmc-mv-mem-panel{background:#271b15 !important;color:#f6ead6 !important}
+
+html.cc-dark .mkmm-item.is-here{background:rgba(249,213,68,.12) !important}
+html.cc-dark .mkmm-item:hover{background:#33241c !important}
+html.cc-dark #bmc-panel,html.cc-dark #bmc-panel-foot{background:#271b15 !important;color:#f6ead6}
+html.cc-dark #bmc-panel-new,html.cc-dark #bmc-panel-settings,html.cc-dark #bmc-panel-close,html.cc-dark #bmc-new-btn{background:#33241c !important;color:#f6ead6 !important}
+html.cc-dark #bmc-pill,html.cc-dark #bmc-mobile-btn{border-color:rgba(246,234,214,.15) !important;box-shadow:0 6px 18px rgba(0,0,0,.45) !important}
