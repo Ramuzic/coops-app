@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">ChickenCoops.ai</string>
-    <string name="title_activity_main">ChickenCoops.ai</string>
+    <string name="app_name">Coopai</string>
+    <string name="title_activity_main">Coopai</string>
     <string name="package_name">ai.chickencoops.app</string>
     <string name="custom_url_scheme">ai.chickencoops.app</string>
     <string name="sc_plan">Plan a coop</string>

@@ -1,6 +1,6 @@
 {
   "appId": "coop.chickencoops.ai",
-  "appName": "ChickenCoops.ai",
+  "appName": "Coopai",
   "webDir": "www",
   "server": {
     "url": "https://chickencoops.ai/app-home/",
