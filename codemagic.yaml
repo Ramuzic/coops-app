@@ -28,6 +28,8 @@ definitions:
       vars:
         # The real logo. Turned into the app icon and splash during the build.
         LOGO_URL: https://coopsai.s3.amazonaws.com/wp-content/uploads/2026/11/08154919/coop-ai-app-logo.png
+        # The site favicon: the Coop mascot with no background. Becomes the app icon on a sage background.
+        MASCOT_URL: https://coopsai.s3.amazonaws.com/wp-content/uploads/2026/11/08171547/cropped-coop-mascot-BNEAxjfO.png
         # Lowest build number to use. Must be higher than any build already uploaded.
         BUILD_FLOOR: 200
         # The live app's numeric Apple ID, used to pick a build number above Apple's latest.
@@ -42,13 +44,15 @@ definitions:
         script: |
           # If the logo cannot be downloaded the placeholder art in the project is used.
           mkdir -p /tmp/logo
-          # The app icon is resources/app-icon.png (in the repo). The logo is only used on the splash.
           python3 -m pip install --quiet pillow 2>/dev/null || python3 -m pip install --quiet --break-system-packages pillow
+          # The app icon is the site's mascot favicon; if it cannot be downloaded, resources/app-icon.png is used.
+          ICON_ARG="--icon resources/app-icon.png"
+          if curl -fsSL "$MASCOT_URL" -o /tmp/logo/mascot.png; then ICON_ARG="--mascot /tmp/logo/mascot.png"; else echo "Mascot not downloaded, using resources/app-icon.png"; fi
           if curl -fsSL "$LOGO_URL" -o /tmp/logo/logo.png; then
-            python3 scripts/make-art.py --icon resources/app-icon.png --logo /tmp/logo/logo.png || echo "Art step failed"
+            python3 scripts/make-art.py $ICON_ARG --logo /tmp/logo/logo.png || echo "Art step failed"
           else
             echo "Logo not downloaded, placeholder splash used"
-            python3 scripts/make-art.py --icon resources/app-icon.png || echo "Art step failed"
+            python3 scripts/make-art.py $ICON_ARG || echo "Art step failed"
           fi
       - name: Copy the web settings into the iPhone project
         script: npx cap sync ios

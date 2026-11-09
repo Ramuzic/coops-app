@@ -18,6 +18,9 @@ from PIL import Image, ImageDraw, ImageFont
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 CREAM = (0xFE, 0xF6, 0xE7)
 BARN = (0xCF, 0x42, 0x38)
+SAGE = (0x8A, 0xB1, 0x81)
+SAGE_DEEP = (0x5E, 0x8A, 0x56)
+SUN = (0xF9, 0xD5, 0x44)
 
 FONTS = [
     "/usr/share/fonts/truetype/google-fonts/Poppins-Bold.ttf",
@@ -108,6 +111,50 @@ def splash(logo, w, h):
     return im.convert("RGB")
 
 
+def mascot_bg(size):
+    """Sage green with a soft sun glow behind the mascot (yellow and red both pop on it)."""
+    s = size
+    im = Image.new("RGB", (s, s), SAGE_DEEP)
+    px = im.load()
+    cx, cy = s * 0.5, s * 0.42
+    rmax = (2 * (s * 0.75) ** 2) ** 0.5
+    for y in range(s):
+        for x in range(s):
+            t = min(1.0, (((x - cx) ** 2 + (y - cy) ** 2) ** 0.5) / rmax)
+            # sun glow in the middle, sage, then a deeper sage at the corners
+            if t < 0.35:
+                k = t / 0.35
+                c = tuple(int(SUN[i] * (1 - k) * 0.35 + SAGE[i] * (1 - (1 - k) * 0.35)) for i in range(3))
+            else:
+                k = (t - 0.35) / 0.65
+                c = tuple(int(SAGE[i] * (1 - k) + SAGE_DEEP[i] * k) for i in range(3))
+            px[x, y] = c
+    return im
+
+
+def fit_mascot(mascot, size, fill):
+    """The mascot cropped to its own outline and scaled to fill part of a transparent square."""
+    m = mascot.convert("RGBA")
+    box = m.split()[3].point(lambda a: 255 if a > 12 else 0).getbbox()
+    if box:
+        m = m.crop(box)
+    k = (size * fill) / max(m.size)
+    m = m.resize((max(1, int(m.width * k)), max(1, int(m.height * k))), Image.LANCZOS)
+    out = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+    out.alpha_composite(m, ((size - m.width) // 2, (size - m.height) // 2 + int(size * 0.01)))
+    return out
+
+
+def mascot_icon(mascot, size=1024):
+    bg = mascot_bg(256).resize((size, size), Image.BICUBIC).convert("RGBA")
+    # a soft shadow under the feet so it sits on the ground
+    sh = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+    ImageDraw.Draw(sh).ellipse([size * 0.30, size * 0.86, size * 0.70, size * 0.93], fill=(40, 60, 35, 70))
+    bg.alpha_composite(sh)
+    bg.alpha_composite(fit_mascot(mascot, size, 0.84))
+    return bg.convert("RGB")
+
+
 def save(img, path):
     img.save(path, "PNG", optimize=True)
     print("wrote", os.path.relpath(path, ROOT), img.size)
@@ -117,6 +164,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--logo", help="square PNG logo; without it a placeholder is drawn")
     ap.add_argument("--icon", help="full square app icon (1024 PNG, no transparency); used for the app icons, the logo stays on the splash")
+    ap.add_argument("--mascot", help="the mascot with no background (the site favicon); put on a sage background for the app icons. Wins over --icon")
     a = ap.parse_args()
     logo = None
     if a.logo:
@@ -129,12 +177,23 @@ def main():
     r = lambda *p: os.path.join(ROOT, *p)
 
     icon = None
-    if a.icon:
+    mascot = None
+    if a.mascot:
+        mascot = Image.open(a.mascot)
+        mascot.load()
+        icon = mascot_icon(mascot).convert("RGBA")
+    elif a.icon:
         icon = Image.open(a.icon)
         icon.load()
         icon = flat(icon.convert("RGBA").resize((1024, 1024), Image.LANCZOS)).convert("RGBA")
     ic_full = (lambda size: flat(icon.resize((size, size), Image.LANCZOS))) if icon is not None else (lambda size: full_icon(logo, size))
-    ic_fg = (lambda size: icon.resize((size, size), Image.LANCZOS)) if icon is not None else (lambda size: foreground(logo, size))
+    if mascot is not None:
+        # Android adaptive icon: the mascot alone in the safe middle, the sage glow behind it.
+        ic_fg = lambda size: fit_mascot(mascot, size, 0.58)
+        ic_bg = lambda size: mascot_bg(256).resize((size, size), Image.BICUBIC)
+    else:
+        ic_fg = (lambda size: icon.resize((size, size), Image.LANCZOS)) if icon is not None else (lambda size: foreground(logo, size))
+        ic_bg = lambda size: Image.new("RGB", (size, size), CREAM)
     def ic_round(size):
         if icon is None:
             return round_icon(logo, size)
@@ -149,7 +208,7 @@ def main():
     save(ic_full(1024), r("resources", "icon.png"))
     save(ic_full(1024), r("resources", "icon-only.png"))
     save(ic_fg(1024), r("resources", "icon-foreground.png"))
-    save(Image.new("RGB", (1024, 1024), CREAM), r("resources", "icon-background.png"))
+    save(ic_bg(1024), r("resources", "icon-background.png"))
     save(splash(logo, 2732, 2732), r("resources", "splash.png"))
     save(splash(logo, 2732, 2732), r("resources", "splash-dark.png"))
 
@@ -171,7 +230,7 @@ def main():
         elif name == "ic_launcher_foreground.png":
             save(ic_fg(w), p)
         elif name == "ic_launcher_background.png":
-            save(Image.new("RGB", (w, w), CREAM), p)
+            save(ic_bg(w), p)
     for p in glob.glob(os.path.join(res, "drawable*", "splash.png")):
         w, h = Image.open(p).size
         save(splash(logo, w, h), p)
