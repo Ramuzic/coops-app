@@ -27,7 +27,7 @@ definitions:
       xcode: latest
       vars:
         # The real logo. Turned into the app icon and splash during the build.
-        LOGO_URL: https://coopsai.s3.us-east-1.amazonaws.com/coop-ai-app-logo.png
+        LOGO_URL: https://coopsai.s3.amazonaws.com/wp-content/uploads/2026/11/08154919/coop-ai-app-logo.png
         # Lowest build number to use. Must be higher than any build already uploaded.
         BUILD_FLOOR: 200
         # The live app's numeric Apple ID, used to pick a build number above Apple's latest.

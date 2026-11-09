@@ -10,7 +10,7 @@ on:
       url:
         description: Logo address (a square PNG, 1024 x 1024 or bigger)
         required: true
-        default: https://coopsai.s3.us-east-1.amazonaws.com/coop-ai-app-logo.png
+        default: https://coopsai.s3.amazonaws.com/wp-content/uploads/2026/11/08154919/coop-ai-app-logo.png
 
 permissions:
   contents: write
