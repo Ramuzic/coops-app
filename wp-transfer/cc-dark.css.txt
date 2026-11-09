@@ -443,3 +443,13 @@ html.cc-dark .cc-site .ast-header-account-type-avatar img.avatar, html.cc-dark .
 
 /* Profiles: the community already has its own Block button, so the extra one stays hidden (both modes). */
 .qpr-header-actions:has(#qpr-bk) .ccsf-block-btn { display: none !important; }
+
+/* Account page (membership plugin) and the not-found page. */
+html.cc-dark .ihc-ap-wrap, html.cc-dark .ihc-ap-menu, html.cc-dark .ihc-account-page-wrapp, html.cc-dark .iump-account-page,
+html.cc-dark .ihc-ap-top-background, html.cc-dark .ihc-user-page-details, html.cc-dark .ihc-account-subscr-list, html.cc-dark .iump-form-line-register,
+html.cc-dark .ihc-ap-section, html.cc-dark .iump-user-page-wrapper, html.cc-dark .ihc-public-wrapp-visual-user, html.cc-dark .error-404, html.cc-dark .ast-404-layout-1 {
+  background: #241914 !important; color: #f6ead6 !important; border-color: rgba(246, 234, 214, .1) !important; box-shadow: none !important;
+}
+html.cc-dark .ihc-ap-wrap :is(h1, h2, h3, h4, a, span, p, td, th, label), html.cc-dark .ihc-ap-menu a, html.cc-dark .error-404 :is(h1, h2, p) { color: #f6ead6 !important; }
+html.cc-dark .ihc-ap-menu a:hover, html.cc-dark .ihc-ap-menu .ihc-ap-menu-item-selected a { color: #f9d544 !important; background: rgba(246, 234, 214, .06) !important; }
+html.cc-dark .ihc-ap-wrap table, html.cc-dark .ihc-ap-wrap td, html.cc-dark .ihc-ap-wrap th { border-color: rgba(246, 234, 214, .12) !important; background: transparent !important; }
