@@ -42,11 +42,13 @@ definitions:
         script: |
           # If the logo cannot be downloaded the placeholder art in the project is used.
           mkdir -p /tmp/logo
+          # The app icon is resources/app-icon.png (in the repo). The logo is only used on the splash.
+          python3 -m pip install --quiet pillow 2>/dev/null || python3 -m pip install --quiet --break-system-packages pillow
           if curl -fsSL "$LOGO_URL" -o /tmp/logo/logo.png; then
-            python3 -m pip install --quiet pillow 2>/dev/null || python3 -m pip install --quiet --break-system-packages pillow
-            python3 scripts/make-art.py --logo /tmp/logo/logo.png || echo "Logo step failed, placeholder art used"
+            python3 scripts/make-art.py --icon resources/app-icon.png --logo /tmp/logo/logo.png || echo "Art step failed"
           else
-            echo "Logo not downloaded, placeholder art used"
+            echo "Logo not downloaded, placeholder splash used"
+            python3 scripts/make-art.py --icon resources/app-icon.png || echo "Art step failed"
           fi
       - name: Copy the web settings into the iPhone project
         script: npx cap sync ios

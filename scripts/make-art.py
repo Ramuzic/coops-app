@@ -116,6 +116,7 @@ def save(img, path):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--logo", help="square PNG logo; without it a placeholder is drawn")
+    ap.add_argument("--icon", help="full square app icon (1024 PNG, no transparency); used for the app icons, the logo stays on the splash")
     a = ap.parse_args()
     logo = None
     if a.logo:
@@ -127,16 +128,33 @@ def main():
 
     r = lambda *p: os.path.join(ROOT, *p)
 
+    icon = None
+    if a.icon:
+        icon = Image.open(a.icon)
+        icon.load()
+        icon = flat(icon.convert("RGBA").resize((1024, 1024), Image.LANCZOS)).convert("RGBA")
+    ic_full = (lambda size: flat(icon.resize((size, size), Image.LANCZOS))) if icon is not None else (lambda size: full_icon(logo, size))
+    ic_fg = (lambda size: icon.resize((size, size), Image.LANCZOS)) if icon is not None else (lambda size: foreground(logo, size))
+    def ic_round(size):
+        if icon is None:
+            return round_icon(logo, size)
+        s4 = size * 4
+        base = icon.resize((s4, s4), Image.LANCZOS)
+        m = Image.new("L", (s4, s4), 0)
+        ImageDraw.Draw(m).ellipse([0, 0, s4 - 1, s4 - 1], fill=255)
+        base.putalpha(m)
+        return base.resize((size, size), Image.LANCZOS)
+
     # resources/ (the source files @capacitor/assets would use)
-    save(full_icon(logo, 1024), r("resources", "icon.png"))
-    save(full_icon(logo, 1024), r("resources", "icon-only.png"))
-    save(foreground(logo, 1024), r("resources", "icon-foreground.png"))
+    save(ic_full(1024), r("resources", "icon.png"))
+    save(ic_full(1024), r("resources", "icon-only.png"))
+    save(ic_fg(1024), r("resources", "icon-foreground.png"))
     save(Image.new("RGB", (1024, 1024), CREAM), r("resources", "icon-background.png"))
     save(splash(logo, 2732, 2732), r("resources", "splash.png"))
     save(splash(logo, 2732, 2732), r("resources", "splash-dark.png"))
 
     # iPhone
-    save(full_icon(logo, 1024), r("ios", "App", "App", "Assets.xcassets", "AppIcon.appiconset", "AppIcon-512@2x.png"))
+    save(ic_full(1024), r("ios", "App", "App", "Assets.xcassets", "AppIcon.appiconset", "AppIcon-512@2x.png"))
     for p in glob.glob(r("ios", "App", "App", "Assets.xcassets", "Splash.imageset", "*.png")):
         w, h = Image.open(p).size
         save(splash(logo, w, h), p)
@@ -147,11 +165,11 @@ def main():
         w, _ = Image.open(p).size
         name = os.path.basename(p)
         if name == "ic_launcher.png":
-            save(full_icon(logo, w), p)
+            save(ic_full(w), p)
         elif name == "ic_launcher_round.png":
-            save(round_icon(logo, w), p)
+            save(ic_round(w), p)
         elif name == "ic_launcher_foreground.png":
-            save(foreground(logo, w), p)
+            save(ic_fg(w), p)
         elif name == "ic_launcher_background.png":
             save(Image.new("RGB", (w, w), CREAM), p)
     for p in glob.glob(os.path.join(res, "drawable*", "splash.png")):

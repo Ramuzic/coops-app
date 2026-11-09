@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d84a3f"/>
+      <stop offset="1" stop-color="#b8362d"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.38" r="0.55">
+      <stop offset="0" stop-color="#f9d544" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#f9d544" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+  <rect width="1024" height="1024" fill="url(#glow)"/>
+
+  <!-- sun -->
+  <circle cx="512" cy="330" r="150" fill="#f9d544"/>
+
+  <!-- ground -->
+  <path d="M0 800 Q512 735 1024 800 L1024 1024 L0 1024 Z" fill="#8ab181"/>
+  <path d="M0 800 Q512 735 1024 800" fill="none" stroke="#321b13" stroke-width="22"/>
+
+  <!-- coop: shadow, body, roof -->
+  <path d="M300 470 L512 300 L724 470 L724 790 L300 790 Z" fill="#fef6e7" stroke="#321b13" stroke-width="26" stroke-linejoin="round"/>
+  <!-- roof -->
+  <path d="M232 500 L512 268 L792 500" fill="none" stroke="#321b13" stroke-width="60" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M232 500 L512 268 L792 500" fill="none" stroke="#cf4238" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- siding lines -->
+  <g stroke="#e9dcc4" stroke-width="10">
+    <line x1="318" y1="560" x2="706" y2="560"/>
+    <line x1="318" y1="630" x2="706" y2="630"/>
+    <line x1="318" y1="700" x2="706" y2="700"/>
+  </g>
+  <!-- round window -->
+  <circle cx="512" cy="440" r="46" fill="#f9d544" stroke="#321b13" stroke-width="20"/>
+  <!-- door -->
+  <path d="M432 790 L432 610 Q432 548 512 548 Q592 548 592 610 L592 790 Z" fill="#cf4238" stroke="#321b13" stroke-width="22" stroke-linejoin="round"/>
+  <!-- egg in the doorway -->
+  <ellipse cx="512" cy="712" rx="44" ry="56" fill="#fef6e7" stroke="#321b13" stroke-width="16"/>
+  <!-- ramp -->
+  <path d="M470 790 L440 860 L584 860 L554 790 Z" fill="#c79b6a" stroke="#321b13" stroke-width="16" stroke-linejoin="round"/>
+
+  <!-- hen -->
+  <g transform="translate(800 740)" stroke="#321b13" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M40 -20 C70 -60 90 -110 118 -96 C140 -60 120 10 80 40 Z" fill="#fef6e7" stroke-width="16"/>
+    <path d="M-30 128 l-8 30 M30 128 l8 30" fill="none" stroke-width="12"/>
+    <ellipse cx="0" cy="40" rx="98" ry="78" fill="#fef6e7" stroke-width="16"/>
+    <path d="M-36 40 q40 34 86 0" fill="none" stroke="#e2d3b8" stroke-width="14"/>
+    <path d="M-92 -96 q4 -34 22 -18 q8 -30 24 -6 q16 -22 22 12 z" fill="#cf4238" stroke-width="10"/>
+    <circle cx="-60" cy="-52" r="50" fill="#fef6e7" stroke-width="16"/>
+    <path d="M-104 -62 L-142 -48 L-104 -34 Z" fill="#f9d544" stroke-width="10"/>
+    <path d="M-100 -30 q-6 24 8 30 q10 -14 6 -30 z" fill="#cf4238" stroke-width="8"/>
+    <circle cx="-70" cy="-60" r="9" fill="#321b13" stroke="none"/>
+  </g>
+</svg>
