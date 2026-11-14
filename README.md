@@ -41,7 +41,7 @@ Android still uses `ai.chickencoops.app` (there is no Play Store app yet). Chang
 
 ## Purchases in the app
 
-The site hides upgrades, plan pages and checkout inside the app (chickencoops-tools 1.6.4 checks the `ChickenCoopsApp` user agent), so the app sells nothing and needs no Apple purchases for now.
+The iPhone app sells Premium (`ai.chickencoops.premium.monthly`, UMP level 2) and Pro (`ai.chickencoops.pro.monthly`, UMP level 3) through Apple. The site does the work (chickencoops-tools 1.9.0, `includes/class-cct-apple.php`): the buy buttons on My Account > Subscriptions call `CoopApp.iapBuy`, the site checks Apple's signed receipt and turns the level on until Apple's expiry date, and the page shows Restore purchases, Manage subscription and Apple's subscription wording. Continue with Apple shows next to Google sign-in. Apple's server notifications go to `https://chickencoops.ai/wp-json/cct/v1/iap/notify` (set in App Store Connect > App Information). No new build is needed for this; the app already has these methods. The Android app still hides upgrades.
 
 ## What you need to supply
 
