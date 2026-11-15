@@ -110,6 +110,18 @@ public class CoopAppPlugin extends Plugin {
     @PluginMethod
     public void setBadge(PluginCall call) { call.resolve(); }
 
+    /** A red count on a tab (2.0.2), for unread chat messages: { action: "chat", count: 2 }. 0 clears it. */
+    @PluginMethod
+    public void setTabBadge(PluginCall call) {
+        String action = call.getString("action", "chat");
+        Integer n = call.getInt("count", 0);
+        int count = n == null ? 0 : Math.max(0, n);
+        getActivity().runOnUiThread(() -> {
+            if (getActivity() instanceof MainActivity) ((MainActivity) getActivity()).setTabBadge(action, count);
+            call.resolve();
+        });
+    }
+
     /** Pull to refresh is handled by the page itself on Android. */
     @PluginMethod
     public void setRefresh(PluginCall call) { call.resolve(); }

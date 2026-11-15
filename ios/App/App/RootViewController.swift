@@ -167,6 +167,15 @@ class RootViewController: UIViewController, UITabBarDelegate {
         #endif
     }
 
+    /// A red count on the tab with this action (2.0.2: unread chat messages on the Chat tab). 0 clears it.
+    func setTabBadge(action: String, count: Int) {
+        guard let items = tabBar.items else { return }
+        for (i, t) in config.tabs.enumerated() where t.action == action && i < items.count {
+            items[i].badgeValue = count > 0 ? (count > 99 ? "99+" : String(count)) : nil
+            items[i].badgeColor = UIColor(hex: "#cf4238")
+        }
+    }
+
     /// Slides the tab bar away (full screen browsing, scrolling down, pop-ups) and back.
     /// While the app is starting this only remembers the wish; finishBoot() applies it.
     func setTabBarHidden(_ hidden: Bool) {

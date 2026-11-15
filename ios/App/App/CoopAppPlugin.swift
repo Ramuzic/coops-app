@@ -29,6 +29,7 @@ public class CoopAppPlugin: CAPPlugin, CAPBridgedPlugin {
         CAPPluginMethod(name: "iapManage", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "appleSignIn", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "setBadge", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "setTabBadge", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "setRefresh", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "requestReview", returnType: CAPPluginReturnPromise)
     ]
@@ -261,6 +262,16 @@ public class CoopAppPlugin: CAPPlugin, CAPBridgedPlugin {
             } else {
                 UIApplication.shared.applicationIconBadgeNumber = n
             }
+            call.resolve()
+        }
+    }
+
+    /// A red count on a tab (2.0.2), for unread chat messages: { action: "chat", count: 2 }. 0 clears it.
+    @objc public func setTabBadge(_ call: CAPPluginCall) {
+        let action = call.getString("action") ?? "chat"
+        let n = max(0, call.getInt("count") ?? 0)
+        DispatchQueue.main.async {
+            (self.bridge?.viewController?.parent as? RootViewController)?.setTabBadge(action: action, count: n)
             call.resolve()
         }
     }
